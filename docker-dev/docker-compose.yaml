@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  chroma:
+    image: chromadb/chroma:0.5.3
+    container_name: chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma
+    networks:
+      - dev_network
+    dns:
+      - 114.114.114.114
+      - 8.8.8.8
+      - 8.8.4.4
+    healthcheck:
+      test: ["CMD", "curl", "http://0.0.0.0:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  ollama:
+    build:
+      context: .
+      dockerfile: ollama.Dockerfile
+    image: ollama
+    container_name: ollama
+    environment:
+      - LLM_MODEL=qwen:0.5b # qwen:0.5b is a small model, size is 352MB
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD", "curl", "http://0.0.0.0:11434/api/version"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  chroma_data:
+  ollama_data:
+
+networks:
+  dev_network:
