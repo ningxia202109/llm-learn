@@ -15,7 +15,8 @@ async def main() -> None:
         name="weather_agent",
         model_client=OpenAIChatCompletionClient(
             model="gpt-4o-mini",
-            api_key=os.getenv("OPENAI_API_KEY"),
+            api_key=os.getenv("OPENROUTER_API_KEY"),
+            base_url="https://openrouter.ai/api/v1",
         ),
         tools=[get_weather],
     )
