@@ -6,7 +6,6 @@ import random
 import asyncio
 
 from autogen_core.base import CancellationToken
-from autogen_core.components.tools import FunctionTool
 from typing_extensions import Annotated
 
 from dataclasses import dataclass
