@@ -21,21 +21,20 @@ jobs:
           distribution: "adopt"
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
-
-      - name: Run tests
-        run: mvn test
+        run: |
+          cd resetassured-httpbin
+          mvn test
 
       - name: Publish Test Report
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: test-report
-          path: target/surefire-reports/*.xml
+          path: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
+          report_paths: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
 
