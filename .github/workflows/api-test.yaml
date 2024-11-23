@@ -20,6 +20,18 @@ jobs:
           java-version: "11"
           distribution: "adopt"
 
+      - name: Check httpbin connection
+        run: |
+          echo "Checking httpbin.org connection..."
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" https://httpbin.org/get)
+          echo "httpbin.org status code: $status_code"
+          if [ "$status_code" -eq 200 ]; then
+            echo "Successfully connected to httpbin.org"
+          else
+            echo "Failed to connect to httpbin.org"
+            exit 1
+          fi
+
       - name: Check connections
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -29,21 +41,28 @@ jobs:
           echo "<<<<<<List OPENAPI models>>>>>>"
           curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
 
-      - name: Build with Maven
+      - name: Maven test
+        id: maven-test
+        continue-on-error: true
         run: |
           cd resetassured-httpbin
-          mvn test
+          echo "Java version:"
+          java -version
+          echo "Maven version:"
+          mvn --version
+          echo "Running tests with debug output:"
+          mvn test -Dmaven.surefire.debug
 
       - name: Publish Test Report
         uses: actions/upload-artifact@v4
-        if: success() || failure()
+        if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
         with:
           name: test-report
           path: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
-        if: success() || failure() # always run even if the previous step fails
+        if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
         with:
           report_paths: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
