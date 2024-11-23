@@ -22,6 +22,9 @@ jobs:
 
       - name: Build with Maven
         run: |
+          echo "check if httpbin is up" >> $GITHUB_STEP_SUMMARY
+          curl -s -o /dev/null -w "%{http_code}\n" https://httpbin.org/
+          echo "Running mvn test" >> $GITHUB_STEP_SUMMARY 
           cd resetassured-httpbin
           mvn test
 
