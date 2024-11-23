@@ -20,11 +20,17 @@ jobs:
           java-version: "11"
           distribution: "adopt"
 
+      - name: Check connections
+        run: |
+          echo "<<<<<<check if httpbin is reachable>>>>>>"
+          curl -s -o /dev/null -w "%{http_code}\n" https://httpbin.org
+          curl -i https://httpbin.org/get
+          echo "<<<<<<List OPENAPI models>>>>>>"
+          curl https://api.openai.com/v1/models \
+          -H "Authorization: Bearer $OPENAI_API_KEY"
+
       - name: Build with Maven
         run: |
-          echo "check if httpbin is up" >> $GITHUB_STEP_SUMMARY
-          curl -s -o /dev/null -w "%{http_code}\n" https://httpbin.org/
-          echo "Running mvn test" >> $GITHUB_STEP_SUMMARY 
           cd resetassured-httpbin
           mvn test
 
