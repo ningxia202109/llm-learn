@@ -20,6 +20,13 @@ jobs:
           java-version: "11"
           distribution: "adopt"
 
+      - name: Start local httpbin
+        run: |
+          docker run -d -p 8585:80 --name httpbin kennethreitz/httpbin
+          echo "Waiting for httpbin to start..."
+          sleep 5
+          curl -i http://localhost:8585/get
+
       - name: Check connections
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -40,7 +47,7 @@ jobs:
           echo "Maven version:"
           mvn --version
           echo "Running tests with debug output:"
-          mvn test -Djava.net.preferIPv4Stack=true -Dhttps.protocols=TLSv1.2
+          mvn test -Dtest.environment=local
 
       - name: Publish Test Report
         uses: actions/upload-artifact@v4
@@ -54,5 +61,4 @@ jobs:
         if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
         with:
           report_paths: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
+          github_token: ${{ secrets.GHA_USER_TOKEN }}
