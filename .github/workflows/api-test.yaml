@@ -37,4 +37,5 @@ jobs:
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
