@@ -50,30 +50,11 @@ jobs:
           echo "Maven version:"
           mvn --version
           echo "Running tests with debug output:"
-          mvn test -Dtest.environment=local
-
-      # - name: Publish Test Report
-      #   uses: actions/upload-artifact@v4
-      #   if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
-      #   with:
-      #     name: test-report
-      #     path: 'resetassured-httpbin/target/surefire-reports/TEST-*.xml'
-
-      - name: Create Check Run
-        env:
-          GITHUB_TOKEN: ${{ secrets.GHA_USER_TOKEN }}
-        run: |
-          curl -L \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository }}/check-runs \
-            -d '{"name":"test","head_sha":"${{ github.sha }}"}'
+          mvn test -Dtest.environment=production
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
         with:
           report_paths: "resetassured-httpbin/target/surefire-reports/TEST-*.xml"
-          github_token: ${{ secrets.GHA_USER_TOKEN }}
+          # github_token: ${{ secrets.GHA_USER_TOKEN }}
