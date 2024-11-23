@@ -20,18 +20,6 @@ jobs:
           java-version: "11"
           distribution: "adopt"
 
-      - name: Check httpbin connection
-        run: |
-          echo "Checking httpbin.org connection..."
-          status_code=$(curl -s -o /dev/null -w "%{http_code}" https://httpbin.org/get)
-          echo "httpbin.org status code: $status_code"
-          if [ "$status_code" -eq 200 ]; then
-            echo "Successfully connected to httpbin.org"
-          else
-            echo "Failed to connect to httpbin.org"
-            exit 1
-          fi
-
       - name: Check connections
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

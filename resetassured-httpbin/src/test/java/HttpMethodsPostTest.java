@@ -8,14 +8,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class HttpMethodsPostTest {
-
-    @BeforeAll
-    public static void setup() {
-        RestAssured.baseURI = "https://httpbin.org";
-    }
-
-    // ... (previous GET test methods remain unchanged)
+public class HttpMethodsPostTest extends BaseTest {
 
     @Test
     public void testPost() {

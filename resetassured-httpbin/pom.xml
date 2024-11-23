@@ -45,21 +45,6 @@
         </dependency>
     </dependencies>
 
-  <!-- <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <reportFormat>xml</reportFormat>
-          <testFailureIgnore>true</testFailureIgnore>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </build> -->
-
   <reporting>
     <plugins>
       <plugin>
@@ -68,6 +53,9 @@
         <version>3.0.0-M5</version>
         <configuration>
           <outputName>junit-report</outputName>
+          <systemPropertyVariables>
+              <test.environment>${test.environment}</test.environment>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
     </plugins>
