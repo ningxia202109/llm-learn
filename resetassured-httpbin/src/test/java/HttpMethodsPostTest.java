@@ -10,6 +10,11 @@ import static org.hamcrest.Matchers.*;
 
 public class HttpMethodsPostTest extends BaseTest {
 
+    @BeforeAll
+    public static void setup() {
+        RestAssured.reset();
+    }
+
     @Test
     public void testPost() {
         Response response = given()
@@ -18,7 +23,8 @@ public class HttpMethodsPostTest extends BaseTest {
                 .post("/post");
 
         String className = this.getClass().getSimpleName();
-        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
         System.out.println("Response Body for " + className + "." + methodName + ":");
         System.out.println(response.getBody().asPrettyString());
 

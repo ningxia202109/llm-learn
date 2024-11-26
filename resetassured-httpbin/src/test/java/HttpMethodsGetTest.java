@@ -10,16 +10,28 @@ import static org.hamcrest.Matchers.*;
 
 public class HttpMethodsGetTest extends BaseTest {
 
+    @BeforeAll
+    public static void setup() {
+        RestAssured.reset();
+    }
+
     @Test
     public void testGet() {
+
+        System.out.println("Starting test");
+        System.out.println("Base URI: " + RestAssured.baseURI);
+        System.out.println("Base Path: " + RestAssured.basePath);
+
         Response response = given()
                 .accept(ContentType.JSON)
                 .when()
                 .get("/get");
 
+        System.out.println("Response received: " + response.asString());
         // Log the response body with class and method name
         String className = this.getClass().getSimpleName();
-        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
         System.out.println("Response Body for " + className + "." + methodName + ":");
         System.out.println(response.getBody().asPrettyString());
 
