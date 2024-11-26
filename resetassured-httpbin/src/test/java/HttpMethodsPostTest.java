@@ -10,18 +10,16 @@ import static org.hamcrest.Matchers.*;
 
 public class HttpMethodsPostTest extends BaseTest {
 
-    @BeforeAll
-    public static void setup() {
-        RestAssured.reset();
-        RestAssured.baseURI = "https://httpbin.org";  // Set the correct base URI
-    }
-
     @Test
     public void testPost() {
         Response response = given()
                 .accept(ContentType.JSON)
                 .when()
                 .post("/post");
+
+        System.out.println("Starting test");
+        System.out.println("Base URI: " + RestAssured.baseURI);
+        System.out.println("Base Path: " + RestAssured.basePath);
 
         String className = this.getClass().getSimpleName();
         String methodName = new Object() {

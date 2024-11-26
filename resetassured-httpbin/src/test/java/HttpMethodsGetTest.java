@@ -10,24 +10,18 @@ import static org.hamcrest.Matchers.*;
 
 public class HttpMethodsGetTest extends BaseTest {
 
-    @BeforeAll
-    public static void setup() {
-        RestAssured.reset();
-        RestAssured.baseURI = "https://httpbin.org";  // Set the correct base URI
-    }
-
     @Test
     public void testGet() {
-
-        System.out.println("Starting test");
-        System.out.println("Base URI: " + RestAssured.baseURI);
-        System.out.println("Base Path: " + RestAssured.basePath);
 
         Response response = given()
                 .accept(ContentType.JSON)
                 .when()
                 .get("/get");
 
+        System.out.println("Starting test");
+        System.out.println("Base URI: " + RestAssured.baseURI);
+        System.out.println("Base Path: " + RestAssured.basePath);
+        
         System.out.println("Response received: " + response.asString());
         // Log the response body with class and method name
         String className = this.getClass().getSimpleName();
