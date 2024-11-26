@@ -25,19 +25,19 @@ jobs:
 
       # - name: Start local httpbin
       #   run: |
-      #     docker run -d -p 8585:80 --name httpbin kennethreitz/httpbin
+      #     docker run -d -p 8585:80 --rm --name httpbin kennethreitz/httpbin
       #     echo "Waiting for httpbin to start..."
       #     sleep 5
       #     curl -i http://localhost:8585/get
 
-      # - name: Check connections
-      #   env:
-      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      #   run: |
-      #     echo "<<<<<<check if httpbin is reachable>>>>>>"
-      #     curl -i https://httpbin.org/get
-      #     echo "<<<<<<List OPENAPI models>>>>>>"
-      #     curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
+      - name: Check connections
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "<<<<<<check if httpbin is reachable>>>>>>"
+          curl -i https://httpbin.org/get
+          echo "<<<<<<List OPENAPI models>>>>>>"
+          curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
 
       - name: Maven test
         id: maven-test
@@ -57,4 +57,3 @@ jobs:
         if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
         with:
           report_paths: "resetassured-httpbin/target/surefire-reports/TEST-*.xml"
-          # github_token: ${{ secrets.GHA_USER_TOKEN }}
