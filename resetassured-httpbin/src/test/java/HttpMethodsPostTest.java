@@ -12,14 +12,13 @@ public class HttpMethodsPostTest extends BaseTest {
 
     @Test
     public void testPost() {
+        System.out.println("Starting test");
+        System.out.println("Base URI: " + RestAssured.baseURI);
+
         Response response = given()
                 .accept(ContentType.JSON)
                 .when()
                 .post("/post");
-
-        System.out.println("Starting test");
-        System.out.println("Base URI: " + RestAssured.baseURI);
-        System.out.println("Base Path: " + RestAssured.basePath);
 
         String className = this.getClass().getSimpleName();
         String methodName = new Object() {
