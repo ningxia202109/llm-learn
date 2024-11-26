@@ -38,6 +38,8 @@ jobs:
           curl -i https://httpbin.org/get
           echo "<<<<<<List OPENAPI models>>>>>>"
           curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
+          echo "<<<<<<check java and maven version>>>>>>"
+          mvn --version
 
       - name: Maven test
         id: maven-test
