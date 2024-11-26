@@ -18,6 +18,7 @@ public class HttpMethodsGetTest extends BaseTest {
         System.out.println("Base Path: " + RestAssured.basePath);
 
         Response response = given()
+                .baseUri("https://httpbin.org")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/get");

@@ -16,6 +16,7 @@ public class HttpMethodsPostTest extends BaseTest {
         System.out.println("Base URI: " + RestAssured.baseURI);
 
         Response response = given()
+                .baseUri("https://httpbin.org")
                 .accept(ContentType.JSON)
                 .when()
                 .post("/post");
