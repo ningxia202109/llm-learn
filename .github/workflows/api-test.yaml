@@ -22,7 +22,6 @@ jobs:
         with:
           java-version: '21'  # Specify the Java version you want
           distribution: 'adopt'  # Use AdoptOpenJDK distribution
-          maven-version: '3.9.9'  # Specify the Maven version you want
 
       # - name: Start local httpbin
       #   run: |
