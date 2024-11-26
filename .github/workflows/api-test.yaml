@@ -17,11 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 11
+      - name: Set up JDK and Maven
         uses: actions/setup-java@v4
         with:
-          java-version: "11"
-          distribution: "adopt"
+          java-version: '21'  # Specify the Java version you want
+          distribution: 'adopt'  # Use AdoptOpenJDK distribution
+          maven-version: '3.9.9'  # Specify the Maven version you want
 
       # - name: Start local httpbin
       #   run: |
