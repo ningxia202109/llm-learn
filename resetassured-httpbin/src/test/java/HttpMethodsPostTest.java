@@ -13,6 +13,7 @@ public class HttpMethodsPostTest extends BaseTest {
     @BeforeAll
     public static void setup() {
         RestAssured.reset();
+        RestAssured.baseURI = "https://httpbin.org";  // Set the correct base URI
     }
 
     @Test
