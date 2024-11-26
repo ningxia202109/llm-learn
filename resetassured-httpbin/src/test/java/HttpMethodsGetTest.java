@@ -10,15 +10,17 @@ import static org.hamcrest.Matchers.*;
 
 public class HttpMethodsGetTest extends BaseTest {
 
+    @BeforeAll
+    public static void setupTest() {
+        System.out.println("Test class setup - Base URI: " + RestAssured.baseURI);
+    }
+
     @Test
     public void testGet() {
 
-        System.out.println("Starting test");
-        System.out.println("Base URI: " + RestAssured.baseURI);
-        System.out.println("Base Path: " + RestAssured.basePath);
+        System.out.println("Starting test - Base URI: " + RestAssured.baseURI);
 
         Response response = given()
-                .baseUri("https://httpbin.org")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/get");
