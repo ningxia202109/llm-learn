@@ -47,12 +47,8 @@ jobs:
         timeout-minutes: 15
         run: |
           cd resetassured-httpbin
-          echo "Java version:"
-          java -version
-          echo "Maven version:"
-          mvn --version
           echo "Running tests with debug output:"
-          mvn test -Dtest.environment=production
+          mvn test -Dtest.environment=production -X # Added -X for debug output
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
