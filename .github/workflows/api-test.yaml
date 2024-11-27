@@ -52,6 +52,13 @@ jobs:
           echo "Running tests with debug output:"
           mvn test -Dtest.environment=production
 
+      - name: AI analysis
+        id: ai-analysis
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          python resetassured-httpbin/junit-report-reader/report-reader.py resetassured-httpbin/target/surefire-reports
+
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
