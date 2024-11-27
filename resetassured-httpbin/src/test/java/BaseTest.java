@@ -10,7 +10,7 @@ public class BaseTest {
     public static void setup() {
         // Default to httpbin.org if no environment is specified
         String env = System.getProperty("test.environment", "production");
-
+        System.out.println("Test env is: " + env);
         switch (env) {
             case "local":
                 baseUrl = "http://localhost:8585";
