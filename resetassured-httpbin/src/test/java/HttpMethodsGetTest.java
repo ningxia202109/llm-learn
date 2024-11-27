@@ -8,19 +8,13 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class HttpMethodsGetTest extends BaseTest {
-
-    @BeforeAll
-    public static void setupTest() {
-        System.out.println("Test class setup - Base URI: " + RestAssured.baseURI);
-    }
+public class HttpMethodsGetTest {
 
     @Test
     public void testGet() {
 
-        System.out.println("Starting test - Base URI: " + RestAssured.baseURI);
-
         Response response = given()
+                .baseUri("https://httpbin.org")
                 .accept(ContentType.JSON)
                 .when()
                 .get("/get");

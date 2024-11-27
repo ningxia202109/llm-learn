@@ -24,13 +24,6 @@ jobs:
           distribution: 'microsoft'
           cache: maven
 
-      # - name: Start local httpbin
-      #   run: |
-      #     docker run -d -p 8585:80 --rm --name httpbin kennethreitz/httpbin
-      #     echo "Waiting for httpbin to start..."
-      #     sleep 5
-      #     curl -i http://localhost:8585/get
-
       - name: Check connections
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

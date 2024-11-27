@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class HttpMethodsPostTest extends BaseTest {
+public class HttpMethodsPostTest {
 
     @Test
     public void testPost() {
