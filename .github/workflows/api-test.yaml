@@ -20,8 +20,9 @@ jobs:
       - name: Set up JDK and Maven
         uses: actions/setup-java@v4
         with:
-          java-version: '21'  # Specify the Java version you want
-          distribution: 'adopt'  # Use AdoptOpenJDK distribution
+          java-version: '21'
+          distribution: 'microsoft'
+          cache: maven
 
       # - name: Start local httpbin
       #   run: |
