@@ -3,16 +3,21 @@ A sample RestAPI test by RestAssured test framework, and the testing generetats 
 
 The AI agent uses AutoGen framework.
 
-## JUnit Report Reader Flow
-
+## Process Flow
 ```mermaid
-graph TD
-    A[JUnit Test Execution] -->|Generates| B[XML Test Report]
-    B -->|Input| C[JUnit Report Reader]
-    C -->|Parses| D[Test Results]
-    D -->|Extracts| E[Test Statistics]
-    D -->|Identifies| F[Failed Tests]
-    E --> G[Summary Report]
-    F --> G
-    G -->|Analyzed by| H[AI/LLM]
-    H -->|Generates| I[Insights and Recommendations]
+graph TB
+    A[report-reader] --read-junit-report--> B
+    B[find-failed-testcase] --get-error-message--> C
+    C[ai-qa-agent] --error-message--> D
+    D[gpt-4o-mini] --analyse-error-message--> C
+    C --add-ai-qa-agent-response--> B
+```
+
+## Architecture
+```mermaid
+architecture-beta
+    group github(cloud)[GITHUB]
+
+    service server(server)[Server] in github
+
+```
