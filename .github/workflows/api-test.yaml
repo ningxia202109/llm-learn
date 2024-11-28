@@ -56,6 +56,8 @@ jobs:
         id: ai-analysis
         continue-on-error: true
         timeout-minutes: 15
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           pip install -r resetassured-httpbin/junit-report-reader/requirements.txt
           python resetassured-httpbin/junit-report-reader/report-reader.py resetassured-httpbin/target/surefire-reports
