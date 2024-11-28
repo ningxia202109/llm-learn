@@ -57,6 +57,7 @@ jobs:
         continue-on-error: true
         timeout-minutes: 15
         run: |
+          pip install -y resetassured-httpbin/junit-report-reader/requirements.txt
           python resetassured-httpbin/junit-report-reader/report-reader.py resetassured-httpbin/target/surefire-reports
 
       - name: Publish Test Report

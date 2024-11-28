@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 import sys
 import os
 
+from AutoGenQA import auto_gen_qa
+
 
 def parse_junit_xml(file_path):
     try:
@@ -40,7 +42,7 @@ def process_junit_report(junit_report):
     error_msg, failure_element, testcase_name = get_test_error(root)
     if error_msg:
         print(f"Error message found in {testcase_name}: {error_msg}")
-        update_message(failure_element, "AI message: This is an AI message \n")
+        update_message(failure_element, f"AI message: \n{auto_gen_qa(error_msg)} \n")
         tree.write(junit_report, encoding="UTF-8", xml_declaration=True)
         print(f"Updated error message: \n{failure_element.get('message')}")
 
@@ -54,6 +56,7 @@ def main(junit_report_folder):
         if filename.endswith(".xml"):
             file_path = os.path.join(junit_report_folder, filename)
             process_junit_report(file_path)
+
 
 # python resetassured-httpbin/junit-report-reader/report-reader.py resetassured-httpbin/target/surefire-reports/
 if __name__ == "__main__":

@@ -123,3 +123,6 @@ allure-report/
 
 # Custom
 # Add any other custom ignore rules here
+
+# python package
+**pycache**
