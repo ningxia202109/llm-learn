@@ -25,7 +25,7 @@ expectation failed, field "Access-Control-Allow-Origin", Expected: "", Actual: "
     return qa_engineer_prompt
 
 
-async def ai_process_error_message(error_message) -> str:
+async def _ai_process_error_message(error_message) -> str:
 
     ai_qa_agent = AssistantAgent(
         name="assistant",
@@ -45,7 +45,7 @@ async def ai_process_error_message(error_message) -> str:
 
 def auto_gen_qa(error_message):
     # Process the error log and get the LLM response
-    ai_analysis = asyncio.run(ai_process_error_message(error_message))
+    ai_analysis = asyncio.run(_ai_process_error_message(error_message))
 
     return ai_analysis
 
