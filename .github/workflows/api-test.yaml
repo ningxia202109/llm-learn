@@ -1,10 +1,6 @@
 name: API-TEST
 
 on:
-  push:
-    branches:
-      - main
-      - resetassured-httpbin
   workflow_call:
 
 permissions:
