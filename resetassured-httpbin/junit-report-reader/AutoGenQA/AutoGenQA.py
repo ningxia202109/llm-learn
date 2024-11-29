@@ -9,17 +9,25 @@ from autogen_agentchat.agents import AssistantAgent
 def _ai_qa_engineer_exp() -> str:
     qa_engineer_prompt = """
 You are an experianxe QA engineer, you read error_message and then investgate the root cause of the error based on POSSIBLE_ISSUES, 
-and provide solution from POSSIBLE_SOLUTIONS, reply clear and short message in one line that follow EXAMPLE_ANSWER.
+and provide solution from POSSIBLE_SOLUTIONS, reply clear and short message in json that follow EXAMPLE_ANSWER.
 <POSSIBLE_ISSUES>
-- expectation failed if return value unmatch expected value
+- expectation failed of returned http status code
+- expectation failed in returned header
+- expectation failed in returned body
 </POSSIBLE_ISSUES>
 
 <POSSIBLE_SOLUTIONS>
-- if expection failed present, first, test script need update; second test api has regression issue.
+- if expection failed, test script need update or test api has regression issue.
 </POSSIBLE_SOLUTIONS>
 
 <EXAMPLE_ANSWER>
-expectation failed, field "Access-Control-Allow-Origin", Expected: "", Actual: "", solution: test script need update or test api has regression issue
+{
+    "error_message": "",
+    "error_field": "",
+    "expected_value": "",
+    "actual_value": "",
+    "solution": ""
+}
 </EXAMPLE_ANSWER>
 """
     return qa_engineer_prompt
@@ -55,6 +63,6 @@ if __name__ == "__main__":
     1 expectation failed. Expected header "Access-Control-Allow-Origin" was not "https://httpbin.org", was "*". Headers are: Date=Wed, 27 Nov 2024 01:10:04 GMT Content-Type=application/json Content-Length=557 Connection=keep-alive Server=gunicorn/19.9.0 Access-Control-Allow-Origin=* Access-Control-Allow-Credentials=true
     """
     # Process the error log and get the LLM response
-    ai_analysis = asyncio.run(ai_process_error_message(error_message))
+    ai_analysis = asyncio.run(_ai_process_error_message(error_message))
 
     print(ai_analysis)

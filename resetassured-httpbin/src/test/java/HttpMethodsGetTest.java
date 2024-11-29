@@ -29,7 +29,7 @@ public class HttpMethodsGetTest {
 
         // Perform assertions
         response.then()
-                .statusCode(200)
+                .statusCode(202)
                 .contentType(ContentType.JSON)
                 .body("url", equalTo("https://httpbin.org/get"))
                 .body("$", hasKey("args"))
