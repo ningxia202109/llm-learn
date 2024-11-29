@@ -17,12 +17,12 @@ graph TB
 ```mermaid
 architecture-beta
     group github(cloud)[GITHUB]
-    service runner(logos:github)[Runner] in github
+    service runner(Server)[Runner] in github
 
     group openai(cloud)[OPENAI]
-    service gpt_4o_mini[gpt_4o_mini] in openai
+    service gpt_4o(server)[gpt_4o] in openai
 
-    runner:R -- L:gpt_4o_mini
+    runner:R -- L:gpt_4o
 ```
 
 ## AI QA agent analyses
