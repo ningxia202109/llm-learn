@@ -56,13 +56,3 @@ def auto_gen_qa(error_message):
     ai_analysis = asyncio.run(_ai_process_error_message(error_message))
 
     return ai_analysis
-
-
-if __name__ == "__main__":
-    error_message = f"""
-    1 expectation failed. Expected header "Access-Control-Allow-Origin" was not "https://httpbin.org", was "*". Headers are: Date=Wed, 27 Nov 2024 01:10:04 GMT Content-Type=application/json Content-Length=557 Connection=keep-alive Server=gunicorn/19.9.0 Access-Control-Allow-Origin=* Access-Control-Allow-Credentials=true
-    """
-    # Process the error log and get the LLM response
-    ai_analysis = asyncio.run(_ai_process_error_message(error_message))
-
-    print(ai_analysis)
