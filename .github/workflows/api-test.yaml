@@ -1,0 +1,65 @@
+name: API-TEST
+
+on:
+  workflow_call:
+
+permissions:
+  checks: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK and Maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+          cache: maven
+
+      - name: Check connections
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "<<<<<<check if httpbin is reachable>>>>>>"
+          curl -v https://httpbin.org/get
+          echo "Exit code: $?"
+          echo "<<<<<<List OPENAPI models>>>>>>"
+          curl https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
+          echo "<<<<<<check java and maven version>>>>>>"
+          mvn --version
+
+      - name: Maven package
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          cd resetassured-httpbin
+          mvn clean package -DskipTests
+
+      - name: Maven test
+        id: maven-test
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          cd resetassured-httpbin
+          echo "Running tests with debug output:"
+          mvn test -Dtest.environment=production
+
+      - name: AI analysis
+        id: ai-analysis
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          pip install -r resetassured-httpbin/junit-report-reader/requirements.txt
+          python resetassured-httpbin/junit-report-reader/report-reader.py resetassured-httpbin/target/surefire-reports
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v5
+        if: steps.maven-test.outcome == 'success' || steps.maven-test.outcome == 'failure'
+        with:
+          report_paths: "resetassured-httpbin/target/surefire-reports/TEST-*.xml"
