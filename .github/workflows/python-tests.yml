@@ -1,0 +1,39 @@
+name: Python Tests
+
+on:
+  push:
+    branches:
+      - main
+      - ai-qa-api-agent
+    paths:
+      - "autogen-qa-api-agent/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "autogen-qa-api-agent/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r autogen-qa-api-agent/requirements.txt
+
+      - name: Run tests
+        run: |
+          cd autogen-qa-api-agent
+          python run_tests.py
