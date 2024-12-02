@@ -1,7 +1,6 @@
 import requests
 from typing import Dict, Optional
 from models import ApiSpec
-import json
 
 
 class SwaggerAPIReader:
