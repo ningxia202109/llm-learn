@@ -1,7 +1,5 @@
 import unittest
-from src.models.api_spec import ApiSpec
-from src.models.http_method import HttpMethod
-
+from src.models import ApiSpec
 class TestApiSpec(unittest.TestCase):
 
     def setUp(self):

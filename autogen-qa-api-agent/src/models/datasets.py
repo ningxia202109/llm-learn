@@ -26,5 +26,3 @@ class CodeReviewResult:
     review: str
     session_id: str
     approved: bool
-
-

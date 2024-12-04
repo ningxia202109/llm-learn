@@ -1,6 +1,6 @@
 import json
 from typing import List, Dict, Any, Optional
-from .http_method import HttpMethod
+from src.models.http_method import HttpMethod
 
 
 class ApiSpec:
